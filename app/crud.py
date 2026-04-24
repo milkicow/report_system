@@ -202,11 +202,10 @@ def get_reports(
     return q.order_by(Report.report_date.desc()).offset(skip).limit(limit).all()
 
 
-def create_report(db: Session, data: ReportCreate) -> Report:
-    """Create and persist a new daily report after validating user and project."""
-    get_user(db, data.user_id)
+def create_report(db: Session, data: ReportCreate, user_id: int) -> Report:
+    """Create and persist a new daily report after validating project."""
     get_project(db, data.project_id)
-    report = Report(**data.model_dump())
+    report = Report(user_id=user_id, **data.model_dump())
     db.add(report)
     db.commit()
     db.refresh(report)

@@ -141,7 +141,6 @@ class ProjectMemberOut(BaseModel):
 
 
 class ReportCreate(BaseModel):
-    user_id: int
     project_id: int
     report_date: date
     hours_spent: float

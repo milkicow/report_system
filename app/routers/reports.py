@@ -41,9 +41,9 @@ def list_reports(
 def create_report(
     data: ReportCreate,
     db: Session = Depends(get_db),
-    _: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_user),
 ):
-    return crud.create_report(db, data)
+    return crud.create_report(db, data, user_id=current_user.id)
 
 
 @router.get("/{report_id}", response_model=ReportOut)
